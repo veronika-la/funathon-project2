@@ -108,7 +108,7 @@ Each row contains a short text description (`label`) and the corresponding NACE 
 
 ## Question 1 — Import libraries and load environment variables
 
-Import `os` the `load_dotenv` from the `dotenv` package. Then execute `load_dotenv(override=True)` to load your `.env` file.
+Import the package `mlflow` and the `load_dotenv` from the `dotenv` package. Then execute `load_dotenv(override=True)` to load your `.env` file.
 ```{python}
 #| label: setup
 #| code-fold: true

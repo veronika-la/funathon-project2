@@ -81,7 +81,7 @@ Build a **retrieval-augmented generation** (RAG) system that combines a vector d
 
 Before diving into either part, follow these steps to set up your environment. The same setup applies to both parts.
 
-If you need more details for setups, do not hesitate to visite [project 1 introduction page](https://aiml4os.github.io/funathon-project1/).
+If you need more details for setups, do not hesitate to visite [project 1 introduction page](https://aiml4os.github.io/funathon-project1/) and/or watch the 2026's Funathon [Onboarding replay](https://aiml4os.github.io/funathon-general-website/onboarding.html).
 
 ## Fork this repository
 

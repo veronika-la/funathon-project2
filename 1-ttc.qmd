@@ -14,7 +14,7 @@ execute:
 
 ## The problem: classifying free-text activity descriptions
 
-Given a short text description of a business activity — such as *"I sell croissants and pains au chocolat"* — the goal is to automatically assign the correct **NACE 2.1 activity code** from hundreds of possible categories. This is a **supervised multiclass classification** problem.
+Given a short text description of a business activity — such as *"I sell croissants and pains au chocolat"* — the objective is to find automatically the correct **NACE 2.1 activity code** from hundreds of possible codes. This is a **supervised multiclass classification** problem.
 
 ## Supervised learning or RAG?
 
@@ -193,11 +193,12 @@ final evaluation is truly unbiased.
 
 ## Question 1 — Split the dataset into train / validation / test sets
 
-Use `train_test_split` from `sklearn.model_selection` to split the dataset into train, validation, and test sets (70% / 15% / 15%). Do not forget to choose a `random_state`.
+Use `train_test_split` from `sklearn.model_selection` to split the dataset into train, validation, and test sets (70% / 15% / 15%). Do not forget to choose a `random_state`. Separate the target `y` from the features `X`, and convert them to `numpy` arrays. You should obtain objects `X_train`, `y_train`, and so on.
 
 <details>
 <summary>Clue here</summary>
-`train_test_split` splits a dataset in two — call it twice to get three subsets.
+- `train_test_split` splits a dataset in two — call it twice to get three subsets.
+- You may use the `to_numpy` method to convert to `numpy` arrays.
 </details>
 
 ```{python}
@@ -411,7 +412,7 @@ The geometry of the space encodes meaning.
 
 **To learn more about the building blocks of the torchTextClassifiers package, please visit the [documentation](https://inseefrlab.github.io/torchTextClassifiers/architecture/index.html).**
 
-These are configured through `ModelConfig` and assembled automatically by `torchTextClassifiers`. You can see some `ModelConfig` examples [here](https://inseefrlab.github.io/torchTextClassifiers/architecture/overview.html#usage-examples) and for `torchTextClassifiers` [here](https://inseefrlab.github.io/torchTextClassifiers/api/wrapper.html)
+These are configured through `ModelConfig` and assembled automatically by `torchTextClassifiers`. You can see some `ModelConfig` examples [here](https://inseefrlab.github.io/torchTextClassifiers/architecture/overview.html#usage-examples) and for `torchTextClassifiers` [here](https://inseefrlab.github.io/torchTextClassifiers/api/wrapper.html).
 
 # Training
 
@@ -467,10 +468,8 @@ ttc = torchTextClassifiers(
 
 ## Question 2 — Prepare training
 
-<details>
-<summary>Clue here</summary>
-Create a `TrainingConfig(lr=..., batch_size=..., num_epochs=...)` and call `ttc.train(X_train=..., y_train=..., X_val=..., y_val=..., training_config=..., verbose=True)`. Train on a small subsample so it completes quickly. __Use only 1 epoch for fast training__.
-</details>
+
+Create a `TrainingConfig(lr=..., batch_size=..., num_epochs=...)`. Look at the [documentation](https://inseefrlab.github.io/torchTextClassifiers/api/configs.html#trainingconfig). Do you understand what each argument does? __Use only 1 epoch for fast training__.
 
 ::: {.callout-note appearance="simple" collapse="true"}
 ## Play with hyperparameters
@@ -575,10 +574,22 @@ print(ttc_loaded)
 
 :::
 
-## Question 3 — Load the pretrained model from MLflow
+# Prediction and explainability
 
-We provide a **pretrained model** trained on the full dataset with many epochs.
-Load it as such:
+Once the model is trained, we can use it to predict NACE codes for new text descriptions. Beyond a simple prediction, we also want to understand why a given NACE code was predicted — specifically, which words in the input text contributed the most to the decision. To understand which words influenced a prediction, we use a technique called **integrated gradients** (via Captum's `LayerIntegratedGradients`). It assigns a score to each word in the input: a high score means that word pushed the model toward the predicted class. You can refer to this [tutorial](https://inseefrlab.github.io/torchTextClassifiers/tutorials/explainability.html) on explainability for more details.
+
+::: {.callout-important}
+## On the interpretation of integrated gradients
+Scores based on integrated gradients are a useful guide, not a definitive explanation. Treat them as a way to explore the model's behavior, __not as proof of causality__.
+:::
+
+
+::: {.callout-tip collapse="false" icon=false}
+## `<i class="bi bi-book"></i>`{=html} Exercice 5: Generate predictions and inspect attributions
+
+## Question 0 — Load the pretrained model from MLflow
+
+We provide a **pretrained model** trained on the full dataset with many epochs. Load it using this code:
 
 ```{python}
 #| label: load-public
@@ -595,25 +606,6 @@ ttc = torchTextClassifiers.load(local_dir)
 ttc.pytorch_model.eval()
 
 ```
-
-:::
-
-# Prediction and explainability
-
-Once the model is trained, we can use it to predict NACE codes for new text descriptions.
-Beyond a simple prediction, we also want to understand why a given NACE code was predicted — specifically, which words in the input text contributed the most to the decision.
-
-You can refer to this [tutorial](https://inseefrlab.github.io/torchTextClassifiers/tutorials/explainability.html) on explainability for more details.
-
-To understand which words influenced a prediction, we use a technique called **integrated gradients** (via Captum's `LayerIntegratedGradients`). It assigns a score to each word in the input: a high score means that word pushed the model toward the predicted class.
-
-::: {.callout-important}
-## On the interpretation of integrated gradients
-These scores are a useful guide, not a definitive explanation. Treat them as a way to explore the model's behavior, not as proof of causality.
-:::
-
-::: {.callout-tip collapse="false" icon=false}
-## `<i class="bi bi-book"></i>`{=html} Exercice 5: Generate predictions and inspect attributions
 
 ## Question 1 — Generate top-5 predictions with confidence scores
 

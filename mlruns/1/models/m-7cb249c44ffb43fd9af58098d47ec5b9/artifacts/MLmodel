@@ -1,0 +1,23 @@
+artifact_path: /home/onyxia/funathon-project2/mlruns/1/models/m-7cb249c44ffb43fd9af58098d47ec5b9/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.13.13
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.6.0+cpu
+mlflow_version: 3.12.0
+model_id: m-7cb249c44ffb43fd9af58098d47ec5b9
+model_size_bytes: 2049838
+model_uuid: m-7cb249c44ffb43fd9af58098d47ec5b9
+prompts: null
+run_id: 80ffb9d6813840e5955dbaf174685334
+utc_time_created: '2026-05-28 09:48:35.159716'

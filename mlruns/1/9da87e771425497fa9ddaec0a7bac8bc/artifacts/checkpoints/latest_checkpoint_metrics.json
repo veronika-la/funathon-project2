@@ -1,0 +1,11 @@
+{
+  "lr-Adam": 0.0005000000237487257,
+  "train_loss": 3.829040765762329,
+  "train_loss_step": 2.590996026992798,
+  "val_loss": 2.964644432067871,
+  "val_accuracy": 0.41990476846694946,
+  "train_loss_epoch": 3.829040765762329,
+  "train_accuracy": 0.2751428484916687,
+  "epoch": 0,
+  "global_step": 383
+}

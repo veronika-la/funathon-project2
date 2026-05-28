@@ -1,0 +1,18 @@
+  | Name                                 | Type                    | Params | Mode  | FLOPs
+-------------------------------------------------------------------------------------------------
+0 | model                                | TextClassificationModel | 510 K  | eval  | 0    
+1 | model.token_embedder                 | TokenEmbedder           | 480 K  | eval  | 0    
+2 | model.token_embedder.embedding_layer | Embedding               | 480 K  | eval  | 0    
+3 | model.sentence_embedder              | SentenceEmbedder        | 0      | eval  | 0    
+4 | model.classification_head            | ClassificationHead      | 30.2 K | eval  | 0    
+5 | model.classification_head.net        | Linear                  | 30.2 K | eval  | 0    
+6 | loss                                 | CrossEntropyLoss        | 0      | eval  | 0    
+7 | accuracy_fn                          | MulticlassAccuracy      | 0      | train | 0    
+-------------------------------------------------------------------------------------------------
+510 K     Trainable params
+0         Non-trainable params
+510 K     Total params
+2.041     Total estimated model params size (MB)
+1         Modules in train mode
+7         Modules in eval mode
+0         Total Flops
